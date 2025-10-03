@@ -1,33 +1,53 @@
-import Logo from "./Logo";
-import { Group, Theater } from "lucide-react";
-const Sidebar = () => {
-    return (
-    <aside className="fixed top-0 left-[-500px] lg:left-0 h-full min-h-screen w-full max-w-[400px] 
-    lg:w-[250px] bg-base p-4 border-bordercolor lg:border-r-2 flex-col items-stretch justify-between 
-    transition-all duration-500">
-        {/* Sidebar content goes here */}
-        <div className="flex items-center justify-between">
-            <Logo />
-        </div>
-        {/* Sidebar top end */}
-        {/* Sidebar middle start */}
-        <div className="flex-1 mt-8 bordercolor border-b overflow-hidden overflow-y-auto">
-            <a href="#" className="flex items-center gap-2 my-3 py-2 px-4 transition-all 
-            text-tcolor rounded-md bg-secondary">
-              <Group/>
-              <h3 className="text-lg">Cyber Dashboard</h3>
-            </a>
-             <a href="#" className="flex items-center gap-2 my-3 py-2 px-4 transition-all 
-            text-tcolor rounded-md bg-secondary">
-              <Theater/>
-              <h3 className="text-lg">Threat Type</h3>
-            </a>
-            
-        </div>
-        {/* Sidebar middle end */}
-      
-    </aside>
-    );
-};
+import React from 'react'
+import cyberLogo from '../assets/cyber.png'
+import { Zap } from 'lucide-react'
+import user1 from '../assets/user1.jpg';
+import { BarChart3, Calendar, CreditCard, FileText, LayoutDashboard, MessageSquare, Package, Settings, 
+    ShoppingBag, Users  } from 'lucide-react'
 
-export default Sidebar;
+
+function Sidebar() {
+  return (
+    <div className="transition duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80
+      backdrop-blur-xl border-slate-200/50 dark:border-slate-700/50 flex flex-col
+      relative z-10">
+
+      {/* Logo Section */}
+      <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50">
+        <div className="flex items-center space-x-3">
+
+
+            <img 
+              src={cyberLogo} 
+              alt="Cyber Logo" 
+              className="w-8 h-8 object-contain"
+            /> 
+          {/* Text next to logo */}
+          <div>
+            <h1 className="text-xl font-bold text-slate-800 dark:text-white">CyberGuard</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400">Admin Panel</p>
+          </div>
+        </div>
+      </div> 
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto"></nav>
+        {/* User Profile*/}
+        <div className="p-4 border-t border-slate-200/50 dark:border-slate-700/50">
+        <div className="flex items-center space-x-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+        <img
+         src={user1}
+         alt="user"
+         className="w-10 h-10 rounded-full ring-2 ring-blue-500"
+         />
+         <div className="flex-1 min-w-0">
+         <div className="flex-1 min-w-0">
+         <p className="text-sm font-medium text-slate-800 dark:text-white truncate">Anne Benita</p>
+         <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Administrator</p>
+         </div>
+         </div>
+        </div>
+        </div>
+    </div>
+  )
+}
+
+export default Sidebar
