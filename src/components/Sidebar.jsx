@@ -42,7 +42,7 @@ function Sidebar({ collapsed, onToggle, currentPage, onPageChange }) {
   return (
     <div 
       className={`${collapsed ? "w-20" : "w-72"} 
-      transition duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80
+      transition-all duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80
       backdrop-blur-xl border-slate-200/50 dark:border-slate-700/50 flex flex-col relative z-10`}
     >
 
@@ -80,22 +80,27 @@ function Sidebar({ collapsed, onToggle, currentPage, onPageChange }) {
             >
               <div className="flex items-center space-x-3">
                 <item.icon className="w-5 h-5"/>
-                {!collapsed && (
-                  <span className="font-medium ml-2">{item.label}</span>
-                )}
-                {(item.badge || item.count) && (
-                  <div className="flex space-x-2">
-                    {item.badge && (
-                      <span className="px-2 py-1 text-xs bg-red-500 text-white rounded-full">
-                        {item.badge}
-                      </span>
+               {/* conditional rendering and also fot the menu option to collapse */}
+                 
+                     {!collapsed && (
+                    <>
+                    <span className="font-medium ml-2">{item.label}</span>
+
+                    {(item.badge || item.count) && (
+                        <div className="flex space-x-2">
+                        {item.badge && (
+                            <span className="px-2 py-1 text-xs bg-red-500 text-white rounded-full">
+                            {item.badge}
+                            </span>
+                        )}
+                        {item.count && (
+                            <span className="px-2 py-1 text-xs bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">
+                            {item.count}
+                            </span>
+                        )}
+                        </div>
                     )}
-                    {item.count && (
-                      <span className="px-2 py-1 text-xs bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full">
-                        {item.count}
-                      </span>
-                    )}
-                  </div>
+                    </>
                 )}
               </div>
 
