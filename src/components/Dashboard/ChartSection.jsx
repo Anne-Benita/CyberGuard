@@ -7,8 +7,8 @@ function ChartSection() {
         <div className="xl:col-span-2">
         <VulnerabilitiesChart/>
         </div >
-        <div>
-
+        <div className="space-y-6">
+        <VulTypeChart/>
         </div>
     </div>
     
