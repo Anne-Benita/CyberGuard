@@ -12,10 +12,10 @@ function ChartSection() {
         <div className="space-y-6">
         <VulTypeChart/>
         </div>
-        <div className="xl:col-span-3">
+        <div className="xl:col-span-2">
          <HighImpactChart/>
         </div>
-        <div className="xl:col-span-3">
+        <div className="xl:col-span-2">
          <HourlyThreatChart/>
         </div>
     </div>
