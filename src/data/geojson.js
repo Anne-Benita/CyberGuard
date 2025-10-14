@@ -130,3 +130,75 @@ const cyberThreatData = [
     Malware_Family: "Unknown",
   },
 ];
+
+
+// Data for Activity Feeds
+const activities = [
+  {
+    id: 1,
+    type: 'Critical Incident',
+    icon: 'Zap',
+    title: 'Critical Ransomware Infection Isolated',
+    description:
+      'Asset 10.0.0.25 infected by **LockBit** (CVE-2025-0573). The host was automatically isolated to prevent spread.',
+    time: '5 minutes ago',
+    color: 'text-red-600',
+    bgcolor: 'bg-red-100 dark:bg-red-900/30',
+  },
+  {
+    id: 2,
+    type: 'Containment Success',
+    icon: 'Lock',
+    title: 'Trojan Downloader Quarantined',
+    description:
+      'High severity **Emotet** Downloader detected and successfully quarantined on asset 10.0.0.20.',
+    time: '45 minutes ago',
+    color: 'text-green-600',
+    bgcolor: 'bg-green-100 dark:bg-green-900/30',
+  },
+  {
+    id: 3,
+    type: 'Reconnaissance',
+    icon: 'Eye',
+    title: 'Persistent Brute Force Warning',
+    description:
+      'Repeated SSH Brute Force attempts logged from source IP 133.55.22.88 (Japan) targeting port 22.',
+    time: '2 hours ago',
+    color: 'text-orange-500',
+    bgcolor: 'bg-orange-100 dark:bg-orange-900/30',
+  },
+  {
+    id: 4,
+    type: 'System Alert',
+    icon: 'CloudOff',
+    title: 'DDoS Flood Attack Throttled',
+    description:
+      'High volume DDoS Flood Attack from Russia (185.10.10.50) successfully throttled and mitigated.',
+    time: '4 hours ago',
+    color: 'text-indigo-600',
+    bgcolor: 'bg-indigo-100 dark:bg-indigo-900/30',
+  },
+  {
+    id: 5,
+    type: 'Malware Activity',
+    icon: 'Bug',
+    title: 'Malware Beaconing Detected',
+    description:
+      'Critical detection of **RedLine Stealer** beaconing activity over DNS (Port 53) from India.',
+    time: '6 hours ago',
+    color: 'text-red-500',
+    bgcolor: 'bg-red-100 dark:bg-red-900/30',
+  },
+  {
+    id: 6,
+    type: 'Operational',
+    icon: 'CheckCircle',
+    title: 'Firewall Rule Update Applied',
+    description:
+      'New policy deployed to block known C2 IPs associated with recent Phishing Campaigns.',
+    time: '1 day ago',
+    color: 'text-blue-500',
+    bgcolor: 'bg-blue-100 dark:bg-blue-900/30',
+  },
+];
+
