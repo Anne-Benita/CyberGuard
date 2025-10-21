@@ -1,138 +1,72 @@
-import { MoreHorizontal } from 'lucide-react';
-import React from 'react';
+import React from "react";
+import { MoreHorizontal } from "lucide-react";
 
 const cyberThreatData = [
   {
-    CVE_ID: "CVE-2025-0145",
-    Geo_Country: "United States",
-    Threat_Name: "Phishing Campaign",
-    Timestamp: "2025-10-08T00:15:00Z",
-    Severity_Level: "Low",
-    Source_IP: "192.168.1.10",
-    Destination_IP: "10.0.0.5",
+    CVE_ID: "CVE-2025-1123",
+    Geo_Country: "USA",
+    Threat_Name: "SQL Injection Attack",
+    Timestamp: "2025-10-10 09:25:45",
+    Severity_Level: "High",
+    Source_IP: "192.168.1.101",
+    Destination_IP: "10.0.0.45",
     Action_Taken: "Blocked",
     Protocol: "HTTP",
-    Target_Port: 80,
-    Malware_Family: "None",
-  },
-  {
-    CVE_ID: "CVE-2025-0311",
-    Geo_Country: "Germany",
-    Threat_Name: "SQL Injection Attempt",
-    Timestamp: "2025-10-08T01:20:00Z",
-    Severity_Level: "Medium",
-    Source_IP: "172.16.0.45",
-    Destination_IP: "10.0.0.7",
-    Action_Taken: "Mitigated",
-    Protocol: "HTTPS",
     Target_Port: 443,
     Malware_Family: "None",
   },
-   {
-    CVE_ID: "CVE-2025-0448",
-    Geo_Country: "Russia",
-    Threat_Name: "DDoS Flood Attack",
-    Timestamp: "2025-10-08T03:00:00Z",
-    Severity_Level: "High",
-    Source_IP: "185.10.10.50",
-    Destination_IP: "10.0.0.12",
-    Action_Taken: "Throttled",
-    Protocol: "UDP",
-    Target_Port: 8080,
-    Malware_Family: "N/A",
-  },
   {
-    CVE_ID: "CVE-2025-0573",
+    CVE_ID: "CVE-2025-2244",
     Geo_Country: "China",
-    Threat_Name: "Ransomware Infection",
-    Timestamp: "2025-10-08T05:45:00Z",
+    Threat_Name: "Brute Force Attack",
+    Timestamp: "2025-10-10 08:50:12",
     Severity_Level: "Critical",
-    Source_IP: "103.45.20.80",
-    Destination_IP: "10.0.0.25",
+    Source_IP: "172.16.0.55",
+    Destination_IP: "10.0.0.20",
     Action_Taken: "Isolated",
-    Protocol: "SMB",
-    Target_Port: 445,
-    Malware_Family: "LockBit",
-  },
-  {
-    CVE_ID: "CVE-2025-0629",
-    Geo_Country: "France",
-    Threat_Name: "Unauthorized Access Attempt",
-    Timestamp: "2025-10-08T07:30:00Z",
-    Severity_Level: "Medium",
-    Source_IP: "192.168.20.22",
-    Destination_IP: "10.0.0.18",
-    Action_Taken: "Denied",
     Protocol: "SSH",
     Target_Port: 22,
-    Malware_Family: "None",
+    Malware_Family: "Hydra",
   },
   {
-    CVE_ID: "CVE-2025-0756",
-    Geo_Country: "Brazil",
-    Threat_Name: "Trojan Downloader",
-    Timestamp: "2025-10-08T09:10:00Z",
-    Severity_Level: "High",
-    Source_IP: "201.55.33.60",
-    Destination_IP: "10.0.0.20",
-    Action_Taken: "Quarantined",
-    Protocol: "TCP",
-    Target_Port: 8081,
+    CVE_ID: "CVE-2025-3345",
+    Geo_Country: "Germany",
+    Threat_Name: "Phishing Attempt",
+    Timestamp: "2025-10-10 08:30:00",
+    Severity_Level: "Medium",
+    Source_IP: "203.0.113.10",
+    Destination_IP: "10.0.0.30",
+    Action_Taken: "Alerted",
+    Protocol: "SMTP",
+    Target_Port: 25,
     Malware_Family: "Emotet",
   },
   {
-    CVE_ID: "CVE-2025-0899",
-    Geo_Country: "Japan",
-    Threat_Name: "Brute Force Attack",
-    Timestamp: "2025-10-08T11:00:00Z",
+    CVE_ID: "CVE-2025-4456",
+    Geo_Country: "Brazil",
+    Threat_Name: "Trojan Injection",
+    Timestamp: "2025-10-10 08:15:00",
     Severity_Level: "Low",
-    Source_IP: "133.55.22.88",
-    Destination_IP: "10.0.0.9",
-    Action_Taken: "Alerted",
-    Protocol: "SSH",
-    Target_Port: 22,
-    Malware_Family: "None",
-  },
-  {
-    CVE_ID: "CVE-2025-0950",
-    Geo_Country: "India",
-    Threat_Name: "Malware Beaconing",
-    Timestamp: "2025-10-08T13:30:00Z",
-    Severity_Level: "Critical",
-    Source_IP: "103.99.12.40",
-    Destination_IP: "10.0.0.30",
-    Action_Taken: "Contained",
-    Protocol: "DNS",
-    Target_Port: 53,
-    Malware_Family: "RedLine Stealer",
-  },
-  {
-    CVE_ID: "CVE-2025-1082",
-    Geo_Country: "South Africa",
-    Threat_Name: "Port Scanning",
-    Timestamp: "2025-10-08T15:00:00Z",
-    Severity_Level: "Low",
-    Source_IP: "196.24.88.32",
-    Destination_IP: "10.0.0.14",
-    Action_Taken: "Logged",
+    Source_IP: "192.0.2.5",
+    Destination_IP: "10.0.0.60",
+    Action_Taken: "Monitored",
     Protocol: "TCP",
-    Target_Port: 443,
-    Malware_Family: "None",
+    Target_Port: 8080,
+    Malware_Family: "AgentTesla",
   },
   {
-    CVE_ID: "CVE-2025-1199",
-    Geo_Country: "Canada",
-    Threat_Name: "Exploited Zero-Day Vulnerability",
-    Timestamp: "2025-10-08T18:00:00Z",
-    Severity_Level: "Critical",
-    Source_IP: "198.51.100.5",
-    Destination_IP: "10.0.0.40",
-    Action_Taken: "Patched",
+    CVE_ID: "CVE-2025-5567",
+    Geo_Country: "India",
+    Threat_Name: "Malware Download Attempt",
+    Timestamp: "2025-10-10 07:45:00",
+    Severity_Level: "High",
+    Source_IP: "198.51.100.33",
+    Destination_IP: "10.0.0.70",
+    Action_Taken: "Quarantined",
     Protocol: "HTTPS",
     Target_Port: 443,
-    Malware_Family: "Unknown",
+    Malware_Family: "TrickBot",
   },
-  // ...rest of your data
 ];
 
 function TableSection() {
@@ -152,11 +86,13 @@ function TableSection() {
   };
 
   return (
-    <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl 
-      rounded-b-2xl border border-slate-200/50 dark:border-slate-700/50 p-6">
-      
+    <div
+      className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl 
+      rounded-2xl border border-slate-200/50 dark:border-slate-700/50 
+      max-h-[500px] flex flex-col"
+    >
       {/* Header Section */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between p-6 border-b border-slate-200/50 dark:border-slate-700/50 flex-shrink-0">
         <div>
           <h3 className="text-xl font-semibold text-slate-800 dark:text-white">
             Recent Alerts
@@ -171,21 +107,43 @@ function TableSection() {
       </div>
 
       {/* Table Section */}
-      <div className="overflow-x-auto">
+      <div className="overflow-y-auto overflow-x-auto flex-grow">
         <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-slate-100 dark:bg-slate-800">
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">CVE_ID</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Geo_Country</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Threat_Name</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Timestamp</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Severity_Level</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Source_IP</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Destination_IP</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Action_Taken</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Protocol</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Target_Port</th>
-              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">Malware_Family</th>
+          <thead className="sticky top-0 bg-slate-100 dark:bg-slate-800 z-10">
+            <tr>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                CVE_ID
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Geo_Country
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Threat_Name
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Timestamp
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Severity_Level
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Source_IP
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Destination_IP
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Action_Taken
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Protocol
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Target_Port
+              </th>
+              <th className="p-3 text-left font-semibold text-slate-700 dark:text-slate-300">
+                Malware_Family
+              </th>
               <th></th>
             </tr>
           </thead>
@@ -194,8 +152,7 @@ function TableSection() {
             {cyberThreatData.map((order, index) => (
               <tr
                 key={index}
-                className="border-b border-slate-200/50 dark:border-slate-700/50 
-                hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors"
+                className="border-b border-slate-200/50 dark:border-slate-700/50 hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition-colors"
               >
                 <td className="p-4 text-blue-600 dark:text-blue-400">{order.CVE_ID}</td>
                 <td className="p-4 text-slate-800 dark:text-white">{order.Geo_Country}</td>
@@ -203,9 +160,7 @@ function TableSection() {
                 <td className="p-4 text-slate-800 dark:text-white">{order.Timestamp}</td>
                 <td className="p-4">
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium ${getSeverityColor(
-                      order.Severity_Level
-                    )}`}
+                    className={`px-3 py-1 rounded-full text-xs font-medium ${getSeverityColor(order.Severity_Level)}`}
                   >
                     {order.Severity_Level}
                   </span>
