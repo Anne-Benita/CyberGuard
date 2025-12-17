@@ -1,6 +1,7 @@
 import React from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 const data = [
+  
   { type: "SQL Injection", value: 40, color:"#3b82f6" },
   { type: "XSS", value: 30, color:"#8b5cf6"},
   { type: "CSRF", value: 15, color:"#10b981"},

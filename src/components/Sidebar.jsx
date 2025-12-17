@@ -59,7 +59,7 @@ const menuItems = [
 
   { id: "vulnerability", icon: TrendingUp, label: "Vulnerability Trend" },
   { id: "incidents", icon: Target, label: "Incident Tracker" },
-  { id: "upload", icon: FileText, label: "Reports" },
+  { id: "reports", icon: FileText, label: "Reports" },
   { id: "settings", icon: Settings, label: "Settings" },
   { id: "users", icon: Users, label: "User Management", badge: "Admin" },
   { id: "audit", icon: Scroll, label: "Audit Logs", badge: "Admin" }
