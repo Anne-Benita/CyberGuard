@@ -17,8 +17,8 @@ function ClusterColumnPage() { return <div>Cluster Column Chart Page</div>; }
 
 // Simulated user database
 const initialUsers = [
-  { name: "Anne Benita", email: "admin@example.com", role: "admin", password: "admin123" },
-  { name: "John Doe", email: "user@example.com", role: "user", password: "user123" },
+  { name: "Admin", email: "admin@gmail.com", role: "admin", password: "admin123" },
+  { name: "John Doe", email: "user@gmail.com", role: "user", password: "user123" },
 ];
 
 function App() {
@@ -38,16 +38,30 @@ function App() {
 
   // Login handler
   const handleLogin = ({ email, password }) => {
+    // Admin login
+    if (email === "admin@gmail.com") {
+      if (password !== "admin123") return alert("Wrong admin password!");
+      setLoggedInUser({ name: "Admin", email, role: "admin" });
+      setCurrentPage("dashboard");
+      return;
+    }
+
+    // Regular user: must be @gmail.com
+    if (!email.endsWith("@gmail.com")) return alert("Users must log in with a Gmail account!");
+
     const user = users.find(u => u.email === email && u.password === password);
     if (!user) return alert("User not found or wrong credentials. Please sign up first.");
+    
     setLoggedInUser(user);
     setCurrentPage("dashboard");
-    console.log(`User logged in: ${user.name} (${user.role})`);
   };
 
   // Signup handler
   const handleSignup = ({ name, email, password }) => {
+    // Only allow Gmail for users
+    if (!email.endsWith("@gmail.com")) return alert("Users must sign up with a Gmail account!");
     if (users.find(u => u.email === email)) return alert("User already exists.");
+    
     const newUser = { name, email, password, role: "user" };
     setUsers(prev => [...prev, newUser]);
     alert("Signup successful! Please log in.");
