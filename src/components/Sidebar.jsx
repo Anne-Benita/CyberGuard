@@ -1,72 +1,57 @@
 import React, { useState, useEffect } from "react";
 import cyberLogo from "../assets/cyber.png";
 import user1 from "../assets/user1.jpg";
-import { 
-  BarChart3, Scroll, Target, FileText, LayoutDashboard, TrendingUp, Package, Settings, 
-  Users, BarChart2, ChevronDown, AlertTriangle, Clock3, ShieldAlert, Bug, 
-  ActivitySquare, CalendarDays 
+import {
+  BarChart3, Scroll, Target, FileText, LayoutDashboard, TrendingUp, Package, Settings,
+  Users, BarChart2, ChevronDown, AlertTriangle, Clock3, ShieldAlert, Bug,
+  ActivitySquare, CalendarDays
 } from "lucide-react";
 
-const menuItems = [
+const allMenuItems = [
   { id: "dashboard", icon: LayoutDashboard, label: "Dashboard" },
-
-  { 
-    id: "charts", 
-    icon: BarChart2, 
-    label: "Charts",
-    submenu: [
+  { id: "charts", icon: BarChart2, label: "Charts", submenu: [
       { id: "pie-chart", icon: BarChart3, label: "Pie Chart", filterKey: "chart" },
       { id: "line-chart", icon: TrendingUp, label: "Line Chart", filterKey: "chart" },
-      { id: "cluster-column", icon: Package, label: "Cluster Column Chart", filterKey: "chart" }
+      { id: "cluster-column", icon: Package, label: "Cluster Column Chart", filterKey: "chart" },
     ]
   },
-
-  {
-    id: "threat-type",
-    icon: ShieldAlert,
-    label: "Threat Type",
-    submenu: [
+  { id: "threat-type", icon: ShieldAlert, label: "Threat Type", submenu: [
       { id: "malware", icon: Bug, label: "Malware", filterKey: "threatType" },
       { id: "phishing", icon: AlertTriangle, label: "Phishing", filterKey: "threatType" },
       { id: "ransomware", icon: ShieldAlert, label: "Ransomware", filterKey: "threatType" },
-      { id: "sql-injection", icon: Package, label: "SQL Injection", filterKey: "threatType" }
+      { id: "sql-injection", icon: Package, label: "SQL Injection", filterKey: "threatType" },
     ]
   },
-
-  {
-    id: "severity",
-    icon: AlertTriangle,
-    label: "Severity",
-    submenu: [
+  { id: "severity", icon: AlertTriangle, label: "Severity", submenu: [
       { id: "low", icon: Bug, label: "Low", filterKey: "severity" },
       { id: "medium", icon: ActivitySquare, label: "Medium", filterKey: "severity" },
       { id: "high", icon: ShieldAlert, label: "High", filterKey: "severity" },
-      { id: "critical", icon: AlertTriangle, label: "Critical", filterKey: "severity" }
+      { id: "critical", icon: AlertTriangle, label: "Critical", filterKey: "severity" },
     ]
   },
-
-  {
-    id: "time-range",
-    icon: Clock3,
-    label: "Time Range",
-    submenu: [
+  { id: "time-range", icon: Clock3, label: "Time Range", submenu: [
       { id: "last-24h", icon: CalendarDays, label: "Last 24 Hours", filterKey: "timeRange" },
       { id: "last-7d", icon: CalendarDays, label: "Last 7 Days", filterKey: "timeRange" },
       { id: "last-30d", icon: CalendarDays, label: "Last 30 Days", filterKey: "timeRange" },
-      { id: "custom", icon: Clock3, label: "Custom Range", filterKey: "timeRange" }
+      { id: "custom", icon: Clock3, label: "Custom Range", filterKey: "timeRange" },
     ]
   },
-
   { id: "vulnerability", icon: TrendingUp, label: "Vulnerability Trend" },
   { id: "incidents", icon: Target, label: "Incident Tracker" },
   { id: "reports", icon: FileText, label: "Reports" },
   { id: "settings", icon: Settings, label: "Settings" },
   { id: "users", icon: Users, label: "User Management", badge: "Admin" },
-  { id: "audit", icon: Scroll, label: "Audit Logs", badge: "Admin" }
+  { id: "audit", icon: Scroll, label: "Audit Logs", badge: "Admin" },
 ];
 
-function Sidebar({ collapsed, currentPage, onPageChange, onFilterChange }) {
+function Sidebar({ collapsed, currentPage, onPageChange, onFilterChange, loggedInUser }) {
   const [expandedItems, setExpandedItems] = useState(new Set());
+
+  // Filter menu by role
+  const menuItems = allMenuItems.filter(item => {
+    if (["users", "audit"].includes(item.id) && loggedInUser?.role !== "admin") return false;
+    return true;
+  });
 
   useEffect(() => {
     menuItems.forEach(item => {
@@ -79,8 +64,7 @@ function Sidebar({ collapsed, currentPage, onPageChange, onFilterChange }) {
   const toggleExpanded = (itemId) => {
     setExpandedItems(prev => {
       const newSet = new Set(prev);
-      if (newSet.has(itemId)) newSet.delete(itemId);
-      else newSet.add(itemId);
+      newSet.has(itemId) ? newSet.delete(itemId) : newSet.add(itemId);
       return newSet;
     });
   };
@@ -90,7 +74,7 @@ function Sidebar({ collapsed, currentPage, onPageChange, onFilterChange }) {
   return (
     <div className={`${collapsed ? "w-20" : "w-72"} transition-all duration-300 ease-in-out bg-white/80 dark:bg-slate-900/80
       backdrop-blur-xl border-slate-200/50 dark:border-slate-700/50 flex flex-col relative z-10`}>
-
+      
       {/* Logo */}
       <div className="p-6 border-b border-slate-200/50 dark:border-slate-700/50">
         <div className="flex items-center space-x-3">
@@ -118,10 +102,7 @@ function Sidebar({ collapsed, currentPage, onPageChange, onFilterChange }) {
                     ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/25"
                     : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/50"
                 }`}
-                onClick={() => {
-                  if (hasSubmenu) toggleExpanded(item.id);
-                  else onPageChange(item.id); // switch page for top-level items
-                }}
+                onClick={() => hasSubmenu ? toggleExpanded(item.id) : onPageChange(item.id)}
               >
                 <div className="flex items-center space-x-3">
                   <item.icon className="w-5 h-5"/>
@@ -151,9 +132,8 @@ function Sidebar({ collapsed, currentPage, onPageChange, onFilterChange }) {
                           : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50"
                       }`}
                       onClick={() => {
-                        // Filters stay on dashboard
                         if (subitem.filterKey) onFilterChange(subitem.filterKey, subitem.id);
-                        else onPageChange(subitem.id); // For subitems that are pages
+                        else onPageChange(subitem.id);
                       }}
                     >
                       <subitem.icon className="w-4 h-4"/>
@@ -168,17 +148,17 @@ function Sidebar({ collapsed, currentPage, onPageChange, onFilterChange }) {
       </nav>
 
       {/* User Profile */}
-      {!collapsed && (
-        <div className="p-4 border-t border-slate-200/50 dark:border-slate-700/50">
-          <div className="flex items-center space-x-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
-            <img src={user1} alt="user" className="w-10 h-10 rounded-full ring-2 ring-blue-500"/>
+      <div className="p-4 border-t border-slate-200/50 dark:border-slate-700/50">
+        <div className="flex items-center space-x-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+          <img src={user1} alt="user" className="w-10 h-10 rounded-full ring-2 ring-blue-500"/>
+          {!collapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-800 dark:text-white truncate">Anne Benita</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 truncate">Administrator</p>
+              <p className="text-sm font-medium text-slate-800 dark:text-white truncate">{loggedInUser?.name || "Guest"}</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{loggedInUser?.role || "Passerby"}</p>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

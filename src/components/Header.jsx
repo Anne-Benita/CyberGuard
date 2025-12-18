@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import user1 from "../assets/user1.jpg";
 
-function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick }) {
+function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick, isLoggedIn, onLogout }) {
   const [darkMode, setDarkMode] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState("");
@@ -37,14 +37,13 @@ function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick }) {
   };
 
   const handleRemoveFile = (e) => {
-    e.stopPropagation(); // prevent triggering file input
+    e.stopPropagation();
     setUploadedFileName("");
     if (fileInputRef.current) fileInputRef.current.value = null;
   };
 
   return (
     <>
-      {/* HEADER BAR */}
       <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4 relative z-10">
         <div className="flex items-center justify-between">
           {/* Left */}
@@ -82,7 +81,6 @@ function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick }) {
 
           {/* Right Side */}
           <div className="flex items-center space-x-3 relative">
-            {/* Hidden file input */}
             <input
               type="file"
               ref={fileInputRef}
@@ -90,7 +88,6 @@ function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick }) {
               className="hidden"
             />
 
-            {/* Upload button */}
             <button
               onClick={handleUploadClick}
               className="hidden lg:flex items-center space-x-2 py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:shadow-lg transition-all"
@@ -111,7 +108,6 @@ function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick }) {
               )}
             </button>
 
-            {/* Dark mode toggle */}
             <button
               onClick={() => setDarkMode(!darkMode)}
               className="p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
@@ -119,7 +115,6 @@ function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick }) {
               {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
-            {/* Notifications */}
             <button className="relative p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <Bell className="w-5 h-5" />
               <span className="absolute -top-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
@@ -151,18 +146,29 @@ function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick }) {
               </div>
               <ChevronDown className="w-4 h-4 text-slate-400" />
 
-              {/* Dropdown */}
               {profileOpen && (
                 <div className="absolute right-0 top-12 w-40 bg-white dark:bg-slate-800 shadow-xl rounded-lg border border-slate-200 dark:border-slate-700 py-2 z-50">
-                  <button
-                    onClick={() => {
-                      onLoginClick();
-                      setProfileOpen(false);
-                    }}
-                    className="w-full text-left px-4 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
-                  >
-                    Login / Signup
-                  </button>
+                  {isLoggedIn ? (
+                    <button
+                      onClick={() => {
+                        onLogout();
+                        setProfileOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                    >
+                      Logout
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        onLoginClick();
+                        setProfileOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                    >
+                      Login / Signup
+                    </button>
+                  )}
                 </div>
               )}
             </div>

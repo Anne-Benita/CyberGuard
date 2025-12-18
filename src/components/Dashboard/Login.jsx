@@ -1,17 +1,29 @@
 import React, { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Eye, EyeOff } from "lucide-react";
 
-const Login = ({ onClose }) => {
+const Login = ({ onClose, onLogin, onSignup }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isLoginMode) {
+      if (password !== confirm) return alert("Passwords do not match!");
+      onSignup({ name, email, password });
+    } else {
+      onLogin({ email, password });
+    }
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
-
-      {/* Auth Card */}
       <div className="relative w-[430px] bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-2xl z-50 animate-fadeIn">
-        {/* Back arrow */}
         <button
           className="absolute top-4 left-4 text-slate-600 dark:text-slate-300 hover:text-cyan-500 transition"
           onClick={onClose}
@@ -19,12 +31,10 @@ const Login = ({ onClose }) => {
           <ArrowLeft className="w-6 h-6" />
         </button>
 
-        {/* Title */}
         <h2 className="text-3xl font-semibold text-center mb-6 text-slate-800 dark:text-white">
           {isLoginMode ? "Login" : "Sign Up"}
         </h2>
 
-        {/* Tabs */}
         <div className="flex mb-6 border border-gray-300 rounded-full overflow-hidden relative h-12">
           <div
             className={`absolute top-0 h-full w-1/2 rounded-full bg-gradient-to-r from-blue-700 via-cyan-600 to-cyan-300 transition-all duration-300 ${
@@ -49,14 +59,15 @@ const Login = ({ onClose }) => {
           </button>
         </div>
 
-        {/* Form */}
-        <form className="space-y-5">
+        <form className="space-y-5" onSubmit={handleSubmit}>
           {!isLoginMode && (
             <input
               type="text"
               placeholder="Full Name"
               required
               className="w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400 dark:bg-slate-900 dark:text-white transition"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           )}
 
@@ -65,22 +76,46 @@ const Login = ({ onClose }) => {
             placeholder="Email Address"
             required
             className="w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400 dark:bg-slate-900 dark:text-white transition"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            className="w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400 dark:bg-slate-900 dark:text-white transition"
-          />
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              required
+              className="w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400 dark:bg-slate-900 dark:text-white transition pr-10"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              className="absolute right-2 top-3 text-gray-500 dark:text-gray-400"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            </button>
+          </div>
 
           {!isLoginMode && (
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              required
-              className="w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400 dark:bg-slate-900 dark:text-white transition"
-            />
+            <div className="relative">
+              <input
+                type={showConfirm ? "text" : "password"}
+                placeholder="Confirm Password"
+                required
+                className="w-full p-3 border-b-2 border-gray-300 outline-none focus:border-cyan-500 placeholder-gray-400 dark:bg-slate-900 dark:text-white transition pr-10"
+                value={confirm}
+                onChange={(e) => setConfirm(e.target.value)}
+              />
+              <button
+                type="button"
+                className="absolute right-2 top-3 text-gray-500 dark:text-gray-400"
+                onClick={() => setShowConfirm(!showConfirm)}
+              >
+                {showConfirm ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+              </button>
+            </div>
           )}
 
           {isLoginMode && (
@@ -99,9 +134,7 @@ const Login = ({ onClose }) => {
           </button>
 
           <p className="text-center text-gray-600 dark:text-gray-300">
-            {isLoginMode
-              ? "Don't have an account?"
-              : "Already have an account?"}{" "}
+            {isLoginMode ? "Don't have an account?" : "Already have an account?"}{" "}
             <span
               className="text-cyan-600 hover:underline cursor-pointer"
               onClick={() => setIsLoginMode(!isLoginMode)}
