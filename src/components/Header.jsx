@@ -13,7 +13,19 @@ import {
 } from "lucide-react";
 import user1 from "../assets/user1.jpg";
 
-function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick, isLoggedIn, onLogout }) {
+// ✅ ADDED: Notifications component
+import Notifications from "./Dashboard/Notifications";
+
+
+
+function Header({
+  sidebarCollapsed,
+  onToggleSidebar,
+  onLoginClick,
+  isLoggedIn,
+  onLogout,
+  onFileUpload // already added earlier
+}) {
   const [darkMode, setDarkMode] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [uploadedFileName, setUploadedFileName] = useState("");
@@ -29,6 +41,8 @@ function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick, isLoggedIn, o
     if (file) {
       setUploadedFileName(file.name);
       console.log("Uploaded file:", file);
+
+      onFileUpload?.(file); // already present
     }
   };
 
@@ -115,12 +129,9 @@ function Header({ sidebarCollapsed, onToggleSidebar, onLoginClick, isLoggedIn, o
               {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
-            <button className="relative p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-              <Bell className="w-5 h-5" />
-              <span className="absolute -top-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
-                3
-              </span>
-            </button>
+            {/* ❌ REMOVED static Bell button */}
+            {/* ✅ ADDED real Notifications dropdown */}
+            <Notifications />
 
             <button className="relative p-2.5 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
               <Settings className="w-5 h-5" />

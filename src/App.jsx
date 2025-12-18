@@ -10,12 +10,10 @@ import Auditlogs from "./components/Dashboard/Auditlogs";
 import Usermanagement from "./components/Dashboard/Usermanagement";
 import Vulnerabilitytrend from "./components/Dashboard/Vulnerabilitytrend";
 
-// Placeholder chart pages
 function PieChartPage() { return <div>Pie Chart Page</div>; }
 function LineChartPage() { return <div>Line Chart Page</div>; }
 function ClusterColumnPage() { return <div>Cluster Column Chart Page</div>; }
 
-// Simulated user database
 const initialUsers = [
   { name: "Admin", email: "admin@gmail.com", role: "admin", password: "admin123" },
   { name: "John Doe", email: "user@gmail.com", role: "user", password: "user123" },
@@ -27,18 +25,18 @@ function App() {
   const [users, setUsers] = useState(initialUsers);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
+  const [uploadedFile, setUploadedFile] = useState(null); // ✅ ADDED
+
   const [filters, setFilters] = useState({
     threatType: null,
     severity: null,
     timeRange: null,
   });
 
-  // Filter handler
-  const handleFilterChange = (key, value) => setFilters(prev => ({ ...prev, [key]: value }));
+  const handleFilterChange = (key, value) =>
+    setFilters(prev => ({ ...prev, [key]: value }));
 
-  // Login handler
   const handleLogin = ({ email, password }) => {
-    // Admin login
     if (email === "admin@gmail.com") {
       if (password !== "admin123") return alert("Wrong admin password!");
       setLoggedInUser({ name: "Admin", email, role: "admin" });
@@ -46,22 +44,23 @@ function App() {
       return;
     }
 
-    // Regular user: must be @gmail.com
-    if (!email.endsWith("@gmail.com")) return alert("Users must log in with a Gmail account!");
+    if (!email.endsWith("@gmail.com"))
+      return alert("Users must log in with a Gmail account!");
 
     const user = users.find(u => u.email === email && u.password === password);
-    if (!user) return alert("User not found or wrong credentials. Please sign up first.");
-    
+    if (!user)
+      return alert("User not found or wrong credentials. Please sign up first.");
+
     setLoggedInUser(user);
     setCurrentPage("dashboard");
   };
 
-  // Signup handler
   const handleSignup = ({ name, email, password }) => {
-    // Only allow Gmail for users
-    if (!email.endsWith("@gmail.com")) return alert("Users must sign up with a Gmail account!");
-    if (users.find(u => u.email === email)) return alert("User already exists.");
-    
+    if (!email.endsWith("@gmail.com"))
+      return alert("Users must sign up with a Gmail account!");
+    if (users.find(u => u.email === email))
+      return alert("User already exists.");
+
     const newUser = { name, email, password, role: "user" };
     setUsers(prev => [...prev, newUser]);
     alert("Signup successful! Please log in.");
@@ -71,21 +70,22 @@ function App() {
   const handleLogout = () => {
     setLoggedInUser(null);
     setCurrentPage("dashboard");
-    console.log("User logged out");
   };
 
-  const handleLoginClick = () => setCurrentPage("login");
-  const handleCloseLogin = () => setCurrentPage("dashboard");
-
-  // Role-based page rendering
   const renderDashboardContent = () => {
     const adminOnly = ["audit", "users"];
-    if (!loggedInUser && !["dashboard", "pie-chart", "line-chart", "cluster-column"].includes(currentPage)) {
-      return <div className="text-center text-red-500 font-semibold">Please log in to access this page.</div>;
+
+    if (!loggedInUser &&
+      !["dashboard", "pie-chart", "line-chart", "cluster-column"].includes(currentPage)) {
+      return <div className="text-center text-red-500 font-semibold">
+        Please log in to access this page.
+      </div>;
     }
 
     if (adminOnly.includes(currentPage) && loggedInUser?.role !== "admin") {
-      return <div className="text-center text-red-500 font-semibold">Unauthorized: Admin only page.</div>;
+      return <div className="text-center text-red-500 font-semibold">
+        Unauthorized: Admin only page.
+      </div>;
     }
 
     switch (currentPage) {
@@ -94,7 +94,7 @@ function App() {
       case "line-chart": return <LineChartPage />;
       case "cluster-column": return <ClusterColumnPage />;
       case "incidents": return <IncidentTracker />;
-      case "reports": return <Reports />;
+      case "reports": return <Reports uploadedFile={uploadedFile} />; // ✅ ADDED
       case "settings": return <Settings />;
       case "audit": return <Auditlogs />;
       case "users": return <Usermanagement />;
@@ -106,11 +106,9 @@ function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 transition-all duration-500">
       {currentPage === "login" ? (
-        <Login
-          onClose={handleCloseLogin}
-          onLogin={handleLogin}
-          onSignup={handleSignup}
-        />
+        <Login onClose={() => setCurrentPage("dashboard")}
+               onLogin={handleLogin}
+               onSignup={handleSignup} />
       ) : (
         <div className="flex h-screen overflow-hidden">
           <Sidebar
@@ -120,14 +118,17 @@ function App() {
             onFilterChange={handleFilterChange}
             loggedInUser={loggedInUser}
           />
+
           <div className="flex-1 flex flex-col overflow-hidden relative">
             <Header
               sidebarCollapsed={sidebarCollapsed}
               onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
               isLoggedIn={!!loggedInUser}
-              onLoginClick={handleLoginClick}
+              onLoginClick={() => setCurrentPage("login")}
               onLogout={handleLogout}
+              onFileUpload={setUploadedFile} // ✅ ADDED
             />
+
             <main className="flex-1 overflow-y-auto bg-white dark:bg-slate-900 p-6">
               {renderDashboardContent()}
             </main>
